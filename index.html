@@ -16,9 +16,12 @@
 </head>
 <body>
 
+  <!-- ВЕСЬ ВАШ HTML КОД ОСТАЕТСЯ БЕЗ ИЗМЕНЕНИЙ ДО ТЕГОВ SCRIPT -->
+  <!-- ... (Layout wrapper, Sidebar, Data Pane) ... -->
+  
   <div class="layout-wrapper">
-    
-    <!-- ЛЕВАЯ ПАНЕЛЬ: Управление (Upload, Buttons) -->
+    <!-- ... (Вставьте сюда ваш HTML контент панелей) ... -->
+    <!-- Для краткости я не дублирую весь HTML, он такой же как был -->
     <aside class="pane-controls">
       <div class="pane-header">
         <div class="logo-area">
@@ -34,7 +37,6 @@
       </div>
 
       <div class="pane-body">
-        <!-- Зона загрузки -->
         <div class="upload-container" id="dropZone">
           <input type="file" id="jsonFile" accept=".json" class="file-input">
           <div class="upload-content">
@@ -49,7 +51,6 @@
           Обработать данные
         </button>
 
-        <!-- Кнопки экспорта (всегда видны, но disabled до обработки) -->
         <div id="actionsContainer" class="actions-section disabled">
           <h6 class="section-label">Экспорт данных</h6>
           <div class="actions-grid-md3">
@@ -70,20 +71,14 @@
       </div>
     </aside>
 
-    <!-- ПРАВАЯ ПАНЕЛЬ: Данные (Ошибки, Таблица) -->
     <main class="pane-data" id="dataPane">
-      
-      <!-- Заглушка (Empty State) -->
       <div id="emptyState" class="empty-state">
         <span class="material-symbols-outlined empty-icon">table_view</span>
         <h3>Нет данных для отображения</h3>
         <p>Загрузите файл, чтобы увидеть результат</p>
       </div>
 
-      <!-- Контейнер с результатами -->
       <div id="resultsContainer" style="display: none;">
-        
-        <!-- Блок ошибок -->
         <div id="errorContainer" class="error-container-md3 mb-4" style="display:none;">
           <div class="error-header">
             <div class="d-flex align-items-center gap-3">
@@ -105,12 +100,10 @@
             <span class="chip error">Unit эталон: <b id="expectedUnitLen">-</b></span>
           </div>
           <div class="table-wrapper-md3 error-wrapper">
-            <!-- Таблица ошибок остается скроллящейся, так как там обычно меньше данных, но можно тоже сделать пагинацию при желании -->
             <div id="errorTablePreview"></div>
           </div>
         </div>
 
-        <!-- Поиск и Таблица -->
         <div class="data-header">
           <h2 class="m-0">Данные</h2>
           <div class="search-bar-md3">
@@ -123,15 +116,17 @@
           <div id="tablePreview"></div>
         </div>
         
-        <!-- ПАГИНАЦИЯ -->
         <div id="pagination" class="pagination-container"></div>
       </div>
-
     </main>
   </div>
-
   <div id="toast-container" class="toast-container"></div>
 
-  <script src="script.js"></script>
+  <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ (ПОРЯДОК ВАЖЕН) -->
+  <script src="scripts/UIManager.js"></script>
+  <script src="scripts/DataProcessor.js"></script>
+  <script src="scripts/ExportManager.js"></script>
+  <script src="scripts/TableManager.js"></script>
+  <script src="scripts/app.js"></script> 
 </body>
 </html>
