@@ -8,9 +8,20 @@ class UIManager {
         this.buttons = this.actionsContainer.querySelectorAll('button');
         
         this.initTheme();
+
+        // --- EVENT DELEGATION FOR TOASTS ---
+        const toastContainer = document.getElementById('toast-container');
+        if (toastContainer) {
+            toastContainer.addEventListener('click', (e) => {
+                // Если кликнули по кнопке закрытия или иконке внутри неё
+                const closeBtn = e.target.closest('.toast-btn-close');
+                if (closeBtn) {
+                    this.closeToast(closeBtn);
+                }
+            });
+        }
     }
 
-    // --- Theme Logic ---
     initTheme() {
         const savedTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -38,7 +49,6 @@ class UIManager {
         localStorage.setItem('theme', newTheme);
     }
 
-    // --- Controls Logic ---
     enableControls(enable) {
         if (enable) {
             this.actionsContainer.classList.remove('disabled');
@@ -71,7 +81,6 @@ class UIManager {
         }
     }
 
-    // --- Toast Notifications ---
     showStatus(msg, type = "info") {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
@@ -81,10 +90,11 @@ class UIManager {
         if (type === 'success') iconName = 'check_circle';
         if (type === 'error') iconName = 'error';
 
+        // Убрали onclick="..." из кнопки
         toast.innerHTML = `
             <span class="material-symbols-outlined">${iconName}</span>
             <span>${msg}</span>
-            <button class="toast-btn-close" onclick="uiManager.closeToast(this)">
+            <button class="toast-btn-close">
                 <span class="material-symbols-outlined" style="font-size: 18px;">close</span>
             </button>
         `;
@@ -93,14 +103,20 @@ class UIManager {
 
         if (type !== 'error') {
             setTimeout(() => {
-                if(toast && toast.parentElement) this.closeToast(toast.querySelector('.toast-btn-close'));
+                // Проверяем, существует ли еще тост, перед закрытием
+                if(toast && toast.parentElement) {
+                    const btn = toast.querySelector('.toast-btn-close');
+                    if(btn) this.closeToast(btn);
+                }
             }, 5000);
         }
     }
 
     closeToast(btn) {
         const toast = btn.closest('.toast');
-        toast.classList.add('hide');
-        setTimeout(() => { if(toast.parentElement) toast.remove(); }, 300);
+        if (toast) {
+            toast.classList.add('hide');
+            setTimeout(() => { if(toast.parentElement) toast.remove(); }, 300);
+        }
     }
 }

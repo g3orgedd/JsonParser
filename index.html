@@ -22,7 +22,11 @@
   <div class="layout-wrapper">
     <!-- ... (Вставьте сюда ваш HTML контент панелей) ... -->
     <!-- Для краткости я не дублирую весь HTML, он такой же как был -->
+    <!-- ЛЕВАЯ ПАНЕЛЬ -->
+    <!-- ЛЕВАЯ ПАНЕЛЬ -->
     <aside class="pane-controls">
+
+      <!-- 1. HEADER -->
       <div class="pane-header">
         <div class="logo-area">
           <span class="material-symbols-outlined logo-icon">data_object</span>
@@ -36,13 +40,14 @@
         </button>
       </div>
 
+      <!-- 2. BODY (Основной контент) -->
       <div class="pane-body">
+        
         <div class="upload-container" id="dropZone">
           <input type="file" id="jsonFile" accept=".json" class="file-input">
           <div class="upload-content">
             <span class="material-symbols-outlined upload-icon-md3">cloud_upload</span>
-            <span class="upload-text">Перетащите JSON файл</span>
-            <span class="file-name fade-in" id="fileNameDisplay"></span>
+            <span class="upload-text">Выберите или перетащите JSON файл</span>
           </div>
         </div>
 
@@ -54,21 +59,32 @@
         <div id="actionsContainer" class="actions-section disabled">
           <h6 class="section-label">Экспорт данных</h6>
           <div class="actions-grid-md3">
-            <button id="downloadBtn" class="btn-outlined action-card" disabled>
+            <!-- Кнопки экспорта... -->
+             <button id="downloadBtn" class="btn-outlined action-card" disabled>
               <span class="material-symbols-outlined">folder_zip</span>
-              <span>Скачать Полный список</span>
+              <span>Полный список</span>
             </button>
             <button id="downloadUsnBtn" class="btn-outlined action-card" disabled>
               <span class="material-symbols-outlined">inventory_2</span>
-              <span>Скачать Unit Serial</span>
+              <span>Только Unit Serial</span>
             </button>
             <button id="downloadSntinBtn" class="btn-outlined action-card" disabled>
-              <span class="material-symbols-outlined">qr_code_2</span>
-              <span>Скачать Sntins</span>
+              <span class="material-symbols-outlined">data_array</span>
+              <span>Только Sntins</span>
             </button>
           </div>
         </div>
+
+      </div> <!-- Закрываем pane-body ЗДЕСЬ -->
+
+      <!-- 3. FOOTER (Имя файла теперь здесь, ВНЕ pane-body) -->
+      <div class="file-status-wrapper">
+        <div id="fileNameDisplay" class="file-name-badge" style="display: none;">
+          <span class="material-symbols-outlined icon-sm">description</span>
+          <span class="text-content"></span>
+        </div>
       </div>
+
     </aside>
 
     <main class="pane-data" id="dataPane">
@@ -124,7 +140,7 @@
 
   <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ (ПОРЯДОК ВАЖЕН) -->
   <script src="scripts/UIManager.js"></script>
-  <script src="scripts/DataProcessor.js"></script>
+  <!-- <script src="scripts/DataProcessor.js"></script> -->
   <script src="scripts/ExportManager.js"></script>
   <script src="scripts/TableManager.js"></script>
   <script src="scripts/app.js"></script> 
